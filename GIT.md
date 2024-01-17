@@ -246,3 +246,30 @@ git checkout 是一个危险的命令。 你对那个文件的任何本地修改
 ##远程仓库的使用
 
 当我们克隆一个仓库时，Git会自己创造一个名为origin的远端，指向我克隆的仓库服务器。
+
+###添加远程服务器
+```
+git remote add <shortname><url>
+shortname 是简写，可代替整个URL。
+```
+
+###远程仓库中抓取和拉取
+
+```
+git fetch <remote>
+从远程仓库获取数据
+```
+这个命令会拉取我们还没有的数据。==必须注意 git fetch 只会将数据下载到本地仓库，它不会自动合并或修改你当前的工作==
+
+###推送到仓库
+```
+git push <remote><branch>
+例如 把master分支推送到服务器origin
+
+git push origin master
+```
+
+我们必须保证在我们push前远端没有改动，因为git push 命令会尝试将本地分支和远程分支合并，如果远程分支有了新提交，git push就会失败。
+
+
+
