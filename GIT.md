@@ -271,5 +271,78 @@ git push origin master
 
 我们必须保证在我们push前远端没有改动，因为git push 命令会尝试将本地分支和远程分支合并，如果远程分支有了新提交，git push就会失败。
 
+---
+##分支简介
 
+Git使用git branch <branch name>来创造分支，它本质是创建了一个可以移动的新指针。git branch仅仅创建了新分支，但不会自动切换到该分支/
+
+Git通过HEAD指针指向当前所在的本地分支。==把HEAD理解为当前分支的别名==
+
+**git checkout <branchname>**切换分支。切换分支前保证是一个干净的状态，全部都commit。
+
+直观感受一下分支：
+```
+不妨在提交一次
+$ vim test.rb
+$ git commit -a -m 'made a change'
+```
+![Alt text](image-9.png)
+testing分支移动了，可master没有，我们可以切回master看看。
+
+```
+$ git checkout master
+```
+
+![Alt text](image-10.png)
+此时，项目将忽略testing的修改，以便于向另外一个方向进行修改。
+
+```
+$ vim test.rb
+$ git commit -a -m 'made other changes'
+```
+
+![Alt text](image-11.png)
+
+**git log --oneline --decorate --graph --all**  可以看分叉历史
+
+```
+git branch -d branchname
+删除分支
+```
+
+![Alt text](image-12.png)
+master是主分支，是可以部署的版本。我们用branch来开发新的功能。==这样方便开发和处理BUG==
+
+当开发完毕时，需要合并操作：
+```
+git checkout master
+
+git merge iss53
+```
+
+**因为C4不是C5的祖先，所以merge操作比较复杂。Git会使用两个分支的末端所指的快照（C4,C5）以及这两个分支的公共祖先（C2），做一个简单的三方合并**
+
+合并完毕
+![Alt text](image-13.png)
+
+
+###遇到冲突时的分支合并
+有时候合并操作不会如此顺利，如果你在不同的分支中，对同一个文件的同一个部分进行了修改，Git没法干净合并它们。此时Git会等我来解决冲突，我可以用git status来查看冲突的文件和具体行数。
+
+```
+git merge
+```
+
+###分支开发工作
+
+    许多开发者习惯同时拥有多个开放的分支；比如，在master上保留完全稳定运行的代码，在命名为develop next的分支上用来后续开发和测试。
+
+###远程分支
+
+当我们clone之后，git会创造一个指向origin的master的指针，叫做 origin/master。 同时也有一个指针指向我们本地clone下来的master
+![Alt text](image-14.png)
+
+ 本地工作和远程工作可以分叉，我们可以使用git fetch <remote>来更新本地数据，移动origin/master指针到更新后的位置。
+
+ ![Alt text](image-15.png)
 
