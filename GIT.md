@@ -346,3 +346,24 @@ git merge
 
  ![Alt text](image-15.png)
 
+
+**当远程仓库中新增了一个分支，如果你希望在本地进行操作（例如拉取、合并等），通常需要先创建一个本地分支并将其设置为追踪（track）远程分支，这样才能方便地进行后续操作。**
+
+```
+$ git checkout --track origin/serverfix
+在本地创造一个serverfix同名文件，追踪origin/serverfix。这样追踪了后git pull就会自动从被追踪的远程分支拉取数据。
+```
+
+由于这个操作太普遍了，都可以不显示操作，如果本地没有这个分支且远程分支中仅有一个名字为这个的分支。
+```
+$ git checkout serverfix
+自动创造一个跟踪分支
+```
+
+```
+git branch -vv
+可以列出所有的本地跟踪分支
+
+git push origin --delete serverfix
+服务器上删除分支
+```
